@@ -1,6 +1,9 @@
+
+import { redirect } from "next/navigation";
+
 import { initialProfile } from "@/lib/initial-profile";
 import { db } from "@/lib/db";
-import { redirect } from "next/navigation";
+
 
 const SetupPage = async () => {
     const profile = await initialProfile(); 
@@ -15,9 +18,19 @@ const SetupPage = async () => {
       }
     );
 
-      if (server) return redirect(`/servers/${server.id}`);
+      if (server){
 
-      return <InitialModal />;
-}
+       return redirect(`/servers/${server.id}`);
+      }
+      return (
+        <div>
+          <h1>Setup your profile</h1>
+          <p>Please complete your profile setup.</p>
+        </div>
+      );
+    };
+    
+    export default SetupPage;
+      
+
  
-export default ; 
