@@ -25,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import * as z from "zod"; 
 import {zodResolver} from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 
 const formSchema = z.object({
     name: z.string().min(1, { message: "Server name is required." }),
@@ -32,6 +33,12 @@ const formSchema = z.object({
   }); 
 
 export const InitialModal: React.FC = () => {
+    const [isMounted, setIsMounted] = useState(false);
+    useEffect(() => {
+        setIsMounted(true);
+        
+        }, []);
+    
     const form = useForm(
         {
             resolver: zodResolver(formSchema),
@@ -47,7 +54,8 @@ export const InitialModal: React.FC = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         console.log(values); 
     }
-
+    if (!isMounted) return null;
+    
     return (
         <Dialog open> 
          <DialogContent className="bg-white text-black p-0 overflow-hidden">
@@ -63,12 +71,38 @@ export const InitialModal: React.FC = () => {
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                  <div className="space-y-8 px-6">
                      <div className="flex items-center justify-center text-center">
-                     TODO: image upload!
+                         TODO: image upload!
                      </div>
+                     <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                      Server Name
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        disabled={isLoading}
+                        placeholder="Enter server name"
+                        className="bg-zinc-300/50 border-0 focus-visible: ring-0 text-black focus-visible:ring-offset-0"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
                  </div>
+            
+             <DialogFooter className="bg-gray-100 px-6 py-4">
+                <Button disabled={isLoading} variant= "primary">
+                    Create
+                </Button>
+             </DialogFooter>
                </form>   
             </Form> 
           </DialogContent>
          </Dialog>
     )
-}
+} 
