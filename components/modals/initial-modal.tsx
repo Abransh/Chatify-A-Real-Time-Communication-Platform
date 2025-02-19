@@ -9,6 +9,19 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog";
+
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage
+  } from "@/components/ui/form";
+
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
 import { useForm } from "react-hook-form";
 import * as z from "zod"; 
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -30,6 +43,11 @@ export const InitialModal: React.FC = () => {
     ); 
 
     const isLoading = form.formState.isSubmitting;
+
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        console.log(values); 
+    }
+
     return (
         <Dialog open> 
          <DialogContent className="bg-white text-black p-0 overflow-hidden">
@@ -41,7 +59,16 @@ export const InitialModal: React.FC = () => {
                         Give your server a name and image
                     </DialogDescription>
             </DialogHeader>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                 <div className="space-y-8 px-6">
+                     <div className="flex items-center justify-center text-center">
+                     TODO: image upload!
+                     </div>
+                 </div>
+               </form>   
+            </Form> 
           </DialogContent>
          </Dialog>
-    );
+    )
 }
