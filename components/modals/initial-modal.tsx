@@ -55,7 +55,7 @@ export const InitialModal: React.FC = () => {
         console.log(values); 
     }
     if (!isMounted) return null;
-    
+
     return (
         <Dialog open> 
          <DialogContent className="bg-white text-black p-0 overflow-hidden">
@@ -72,16 +72,19 @@ export const InitialModal: React.FC = () => {
                  <div className="space-y-8 px-6">
                      <div className="flex items-center justify-center text-center">
                          TODO: image upload!
+                         
                      </div>
+                     
+                     
                      <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
+                     control={form.control}
+                     name="name"
+                     render={({ field }) => (
+                     <FormItem>
+                     <FormLabel className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
                       Server Name
-                    </FormLabel>
-                    <FormControl>
+                     </FormLabel>
+                     <FormControl>
                       <Input
                         disabled={isLoading}
                         placeholder="Enter server name"
