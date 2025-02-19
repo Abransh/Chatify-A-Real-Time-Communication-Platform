@@ -27,7 +27,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod"; 
 import {zodResolver} from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
-import { FileUploadData } from "uploadthing/types";
+
 
 const formSchema = z.object({
     name: z.string().min(1, { message: "Server name is required." }),
