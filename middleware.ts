@@ -1,7 +1,7 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
 
 export default clerkMiddleware({ 
-    publicRoutes : ["/api/uploadthing"],
+    publicRoutes: ["/api/uploadthing"],
 });
 
 export const config = {
