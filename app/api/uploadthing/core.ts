@@ -2,11 +2,12 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import { useAuth  } from "@clerk/nextjs"
 import { error } from "console";
+import { auth } from "@clerk/nextjs/server";
 
 const f = createUploadthing();
 
-const handleAuth =  () => {
-    const { userId } = useAuth();
+const handleAuth = async () => {
+    const { userId } = await auth();
     if (!userId) throw new Error("Unauthorized");
     return { userId: userId };
     }
