@@ -63,6 +63,7 @@ export const CreateServerModal: React.FC = () => {
     
           form.reset();
           router.refresh();
+          onClose(); 
           
         } catch (error) {
           console.error(error);
