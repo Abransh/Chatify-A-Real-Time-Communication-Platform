@@ -7,8 +7,8 @@ import { db } from "@/lib/db";
 
 import { NavigationAction } from "@/components/navigation/navigation-action";
 import { Separator } from "@/components/ui/separator";
-// import { ScrollArea } from "@/components/ui/scroll-area";
-// import { NavigationItem } from "@/components/navigation/navigation-item";
+//import { ScrollArea } from "@/components/ui/scroll-area";
+//import { NavigationItem } from "@/components/navigation/navigation-item";
 import { ModeToggle } from "@/components/mode-toggle";
 
 export async function NavigationSidebar() {

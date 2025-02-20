@@ -1,7 +1,9 @@
-const ServerId1Page = () => { 
+const ServerIdPage = () => {
     return (
-     <div>Server Id Page</div>
+        <div>
+            Server Id Page
+        </div>
     ); 
-    }
 
-    export default ServerId1Page;
+}
+export default ServerIdPage;
