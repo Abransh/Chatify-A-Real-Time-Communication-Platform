@@ -47,7 +47,7 @@ interface NavigationItemProps {
               "bg-primary/10 text-primary rounded-[16px]"
           )}
         >
-          <Image fill 
+          <Image className= "w-full h-full object-cover" fill 
           src={imageUrl} 
           alt="Channel" />
       </div>
