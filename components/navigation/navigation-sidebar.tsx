@@ -8,12 +8,12 @@ import { db } from "@/lib/db";
 import { NavigationAction } from "@/components/navigation/navigation-action";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-// import { NavigationItem } from "@/components/navigation/navigation-item";
+
 import { ModeToggle } from "@/components/mode-toggle";
 import { NavigationItem } from "./navigation-item";
 
 export async function NavigationSidebar() {
-  const profile = await currentProfile();
+  const profile = await currentProfile(); 
 
   if (!profile) return redirect("/");
 
@@ -43,7 +43,7 @@ export async function NavigationSidebar() {
           </div>
         ))}
       </ScrollArea>
-      <div className="pb-3 mt-auto flex items-center flex-col gap-y-4">
+      <div className="pb-3 mt-auto flex  items-center flex-col gap-y-4">
         <ModeToggle />
         <UserButton
           afterSignOutUrl="/"

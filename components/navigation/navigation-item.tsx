@@ -20,6 +20,11 @@ interface NavigationItemProps {
         {
             const params = useParams (); 
             const router = useRouter(); 
+
+            const onClick = () =>
+            {
+                router.push ( '/server/${id}'); 
+            }
     return (
     <ActionTooltip 
     side="right"
@@ -27,15 +32,24 @@ interface NavigationItemProps {
      label={name}
      >
     <button 
-     onClick={() =>{} }
+     onClick={onClick}
      className="group relative flex items-center">
       <div
         className={cn(
           "absolute left-0 bg-primary rounded-full transition-all w-[4px]",
           params?.serverId !== id && "group-hover:h-[20px]",
           params?.serverId === id ? "h-[36px]" : "h-[8px]"
-        )}>
-      server
+        )}/>
+      <div
+          className={cn(
+            "relative group flex mx-3 h-[48px] w-[48px] rounded-[24px] group-hover:rounded-[16px] transition-all overflow-hidden",
+            params?.serverId === id &&
+              "bg-primary/10 text-primary rounded-[16px]"
+          )}
+        >
+          <Image fill 
+          src={imageUrl} 
+          alt="Channel" />
       </div>
       </button>
     </ActionTooltip>
