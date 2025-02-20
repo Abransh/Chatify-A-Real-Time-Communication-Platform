@@ -35,11 +35,13 @@
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.7.3",
     "uploadthing": "^7.5.2",
+    "uuid": "^11.1.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
     "@prisma/client": "^6.4.0",
     "@tailwindcss/postcss": "^4.0.6",
+    "@types/uuid": "^10.0.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.2",
     "prisma": "^6.4.0"
