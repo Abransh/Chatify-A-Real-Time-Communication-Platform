@@ -105,7 +105,7 @@ export const InviteModal = () => {
             disabled={isLoading}
              onClick={onNew}
             variant="link"
-            size="sm"
+            size="sm" 
             className="text-xs text-zinc-500 mt-4"
           >
             Generate a new link
