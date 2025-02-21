@@ -17,6 +17,7 @@ import { ChevronDown,
          UserPlus,
          Users
         } from "lucide-react";
+import { useModal } from "@/components/hooks/use-modal-store";
 
 interface ServerHeaderProps {
     server: ServerWithMembersWithProfiles;
@@ -27,6 +28,7 @@ interface ServerHeaderProps {
     server,
     role
   }: ServerHeaderProps) => {
+    const { onOpen } = useModal();
     const isAdmin = role === MemberRole.ADMIN;
   const isModerator = isAdmin || role === MemberRole.MODERATOR; 
     
@@ -45,7 +47,7 @@ interface ServerHeaderProps {
       <DropdownMenuContent className="w-56 text-xs font-medium text-black dark:text-neutral-400 space-y-[2px]">
         {isModerator && (
           <DropdownMenuItem
-            // onClick={() => onOpen("invite", { server })}
+             onClick={() => onOpen("invite", { server })}
             className="text-indigo-600 dark:text-indigo-400 px-3 py-2 text-sm cursor-pointer"
           >
             Invite People
@@ -56,7 +58,7 @@ interface ServerHeaderProps {
 
           {isAdmin && (
              <DropdownMenuItem
-           // onClick={() => onOpen("editServer", { server })}
+           onClick={() => onOpen("editServer", { server })}
             className="px-3 py-2 text-sm cursor-pointer"
           >
             Server Settings
@@ -66,7 +68,7 @@ interface ServerHeaderProps {
 
             {isAdmin && (
           <DropdownMenuItem
-            //onClick={() => onOpen("editServer", { server })}
+            onClick={() => onOpen("editServer", { server })}
             className="px-3 py-2 text-sm cursor-pointer"
           >
             Manage Members
@@ -75,7 +77,7 @@ interface ServerHeaderProps {
         )}
         {isModerator && (
           <DropdownMenuItem
-           // onClick={() => onOpen("editServer", { server })}
+            onClick={() => onOpen("editServer", { server })}
             className="px-3 py-2 text-sm cursor-pointer"
           >
             Create Channels
@@ -87,7 +89,7 @@ interface ServerHeaderProps {
       )}
       {isAdmin && (
           <DropdownMenuItem
-           // onClick={() => onOpen("editServer", { server })}
+            onClick={() => onOpen("editServer", { server })}
             className="text-rose-500 px-3 py-2 text-sm cursor-pointer"
           >
             Delete Server
@@ -97,7 +99,7 @@ interface ServerHeaderProps {
 
           {!isAdmin && (
           <DropdownMenuItem
-           // onClick={() => onOpen("editServer", { server })}
+            onClick={() => onOpen("editServer", { server })}
             className="text-rose-500 px-3 py-2 text-sm cursor-pointer"
           >
             Leave Server
