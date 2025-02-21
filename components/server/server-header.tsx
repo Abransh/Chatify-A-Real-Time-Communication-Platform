@@ -2,8 +2,18 @@
 
 import { ServerWithMembersWithProfiles } from "@/types";
 import { MemberRole } from "@prisma/client";
-import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
+import { DropdownMenu,
+         DropdownMenuContent,
+         DropdownMenuItem, 
+         DropdownMenuTrigger } 
+         from "@/components/ui/dropdown-menu";
+
+import { ChevronDown,
+        PlusCircle,
+        Settings, 
+         UserPlus,
+         Users
+        } from "lucide-react";
 
 interface ServerHeaderProps {
     server: ServerWithMembersWithProfiles;
@@ -27,7 +37,51 @@ interface ServerHeaderProps {
           <ChevronDown 
           className="h-5 w-5 ml-auto" />
         </button>
-      </DropdownMenuTrigger>
+      </DropdownMenuTrigger> 
+
+      <DropdownMenuContent className="w-56 text-xs font-medium text-black dark:text-neutral-400 space-y-[2px]">
+        {isModerator && (
+          <DropdownMenuItem
+            // onClick={() => onOpen("invite", { server })}
+            className="text-indigo-600 dark:text-indigo-400 px-3 py-2 text-sm cursor-pointer"
+          >
+            Invite People
+            <UserPlus className="h-4 w-4 ml-auto" />
+          </DropdownMenuItem>
+         
+        )}
+
+          {isAdmin && (
+             <DropdownMenuItem
+           // onClick={() => onOpen("editServer", { server })}
+            className="px-3 py-2 text-sm cursor-pointer"
+          >
+            Server Settings
+            <Settings className="h-4 w-4 ml-auto" />
+          </DropdownMenuItem>
+        )} 
+
+            {isAdmin && (
+          <DropdownMenuItem
+            //onClick={() => onOpen("editServer", { server })}
+            className="px-3 py-2 text-sm cursor-pointer"
+          >
+            Manage Members
+            <Users className="h-4 w-4 ml-auto" />
+          </DropdownMenuItem>
+        )}
+        {isModerator && (
+          <DropdownMenuItem
+           // onClick={() => onOpen("editServer", { server })}
+            className="px-3 py-2 text-sm cursor-pointer"
+          >
+            Create Channels
+            <PlusCircle className="h-4 w-4 ml-auto" />
+          </DropdownMenuItem>
+        )}
+        </DropdownMenuContent>
+
+        
         </DropdownMenu>
     );
   }
