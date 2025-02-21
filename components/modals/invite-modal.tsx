@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use } from "react";
+import React, { use, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -31,45 +31,47 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useModal } from "../hooks/use-modal-store";
 import { Label } from "@/components/ui/label";
-import { Copy } from "lucide-react";
+import { Check, Copy, RefreshCw } from "lucide-react";
+import { useOrigin } from "@/components/hooks/use-origin";
 
 
 export const InviteModal = () => {
   const { isOpen, onOpen, onClose, type, data } = useModal();
-  // const origin = useOrigin();
+   const origin = useOrigin();
 
   const isModalOpen = isOpen && type === "invite";
   const { server } = data;
 
-  // const [copied, setCopied] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   
-  //const inviteUrl = `${origin}/invite/${server?.inviteCode}`;
+  const inviteUrl = `${origin}/invite/${server?.inviteCode}`;
 
-  // const onCopy = () => {
-  //   navigator.clipboard.writeText(inviteUrl);
-  //   setCopied(true);
+  const onCopy = () => {
+     navigator.clipboard.writeText(inviteUrl);
+     setCopied(true);
 
-  //   setTimeout(() => {
-  //     setCopied(false);
-  //   }, 1000);
-  // };
+     setTimeout(() => {
+       setCopied(false);
+     }, 1000);
+   };
 
-  // const onNew = async () => {
-  //   try {
-  //     setIsLoading(true);
+  const onNew = async () => {
+     try {
+       setIsLoading(true);
 
-  //     const response = await axios.patch(
-  //       `/api/servers/${server?.id}/invite-code`
-  //     );
+      const response = await axios.patch(
+         `/api/servers/${server?.id}/invite-code`
+       );
 
-  //     onOpen("invite", { server: response.data });
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setIsLoading(false);
-//     }
-// ;
+        onOpen("invite", { server: response.data });
+     } catch (error) {
+       console.error(error);
+     } finally {
+       setIsLoading(false);
+     }
+ ;
+    }
 
     return (
       <Dialog open={isModalOpen} onOpenChange={onClose}>
@@ -87,15 +89,15 @@ export const InviteModal = () => {
             <Input
               readOnly
               //disabled={isLoading}
-              value= "Invite Link"   //{inviteUrl}
+              value=  {inviteUrl}
               className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
             />
-            <Button  size="icon">  
-            {/* {copied ? (
+            <Button  onClick = {onCopy}  size="icon">  
+            {copied ? (
                 <Check className="w-4 h-4" />
-              ) : ( */}
+              ) : (
                 <Copy className="w-4 h-4" />
-              {/* )} */}
+              {/* )} */} 
             </Button>
           </div>
           <Button
@@ -106,9 +108,9 @@ export const InviteModal = () => {
             className="text-xs text-zinc-500 mt-4"
           >
             Generate a new link
-            {/* <RefreshCw className="w-4 h-4 ml-2" /> */}
+            <RefreshCw className="w-4 h-4 ml-2" />
           </Button>
-        </div>
+        </div> 
       </DialogContent>
     </Dialog>
     );
