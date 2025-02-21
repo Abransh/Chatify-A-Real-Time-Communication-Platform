@@ -55,6 +55,7 @@ export const InviteModal = () => {
        setCopied(false);
      }, 1000);
    };
+  
 
   const onNew = async () => {
      try {
@@ -88,21 +89,21 @@ export const InviteModal = () => {
           <div className="flex items-center mt-2 gap-x-2">
             <Input
               readOnly
-              //disabled={isLoading}
+              disabled={isLoading}
               value=  {inviteUrl}
               className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
             />
-            <Button  onClick = {onCopy}  size="icon">  
+            <Button disabled= {isLoading} onClick = {onCopy}  size="icon">  
             {copied ? (
                 <Check className="w-4 h-4" />
               ) : (
                 <Copy className="w-4 h-4" />
-              {/* )} */} 
+               )} 
             </Button>
           </div>
           <Button
-            // disabled={isLoading}
-            // onClick={onNew}
+            disabled={isLoading}
+             onClick={onNew}
             variant="link"
             size="sm"
             className="text-xs text-zinc-500 mt-4"
@@ -113,6 +114,8 @@ export const InviteModal = () => {
         </div> 
       </DialogContent>
     </Dialog>
+              
     );
+
   }
     
