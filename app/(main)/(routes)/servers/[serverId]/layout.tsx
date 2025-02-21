@@ -58,7 +58,7 @@ import { auth } from "@clerk/nextjs/server";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import ServerSidebar from "@/components/server/server-sidebar";
-//import { ServerSidebar } from "@/components/server/server-sidebar";
+
 
 export default async function ServerIdLayout({
   children,
@@ -72,18 +72,21 @@ export default async function ServerIdLayout({
   if (!profile) return <RedirectToSignUp redirectUrl="/sign-up" />;
   
 
-  const server = await db.server.findUnique({
-    where: {
-      id: params.serverId,
-      members: {
-        some: {
-          profileId: profile.id
-        }
+ const server = await db.server.findFirst({
+  where: {
+    id: params.serverId,
+    members: {
+      some: {
+        profileId: profile.id
       }
     }
-  });
+  }
+});
 
-  if (!server) return redirect("/");
+if (!server) {
+  console.log("Server not found:", params.serverId);
+  return redirect("/");
+}
 
   return (
     <div className="h-full">

@@ -10,7 +10,8 @@ export async function PATCH(
 ) {
   try {
     const profile = await currentProfile();
-    const { name, imageUrl } = await req.json();
+    await req.json(); // Just read the request body to avoid errors
+
 
     if (!profile)
  return new NextResponse("Unauthorized", { status: 401 });
@@ -20,8 +21,10 @@ export async function PATCH(
 
     const server = await db.server.update({
       where: { 
-        id: params.serverId, 
-     profileId: profile.id },
+        id: params.serverId,
+        profileId: profile.id, 
+      },
+      
       data:
        { 
         inviteCode: uuidv4(),
@@ -48,7 +51,7 @@ export async function DELETE(
       return new NextResponse("Server ID Missing", { status: 400 });
 
     const server = await db.server.delete({
-      where: { id: params.serverId, profileId: profile.id }
+      where: { id: params.serverId }
     });
 
     return NextResponse.json(server);
