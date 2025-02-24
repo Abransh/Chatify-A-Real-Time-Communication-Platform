@@ -67,7 +67,7 @@ export const InviteModal = () => {
 
         onOpen("invite", { server: response.data });
      } catch (error) {
-       console.error(error);
+       console.log(error);
      } finally {
        setIsLoading(false);
      }

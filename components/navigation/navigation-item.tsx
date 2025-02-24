@@ -23,7 +23,7 @@ interface NavigationItemProps {
 
             const onClick = () =>
             {
-                router.push ( '/server/${id}'); 
+                router.push ( `/servers/${id}`); 
             }
     return (
     <ActionTooltip 

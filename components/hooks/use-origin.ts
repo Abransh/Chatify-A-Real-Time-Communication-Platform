@@ -12,7 +12,7 @@ export const useOrigin = () => {
       ? window.location.origin
       : "";
 
-  if (!mounted) return "";
-
+  if (!mounted) {return "";}
+ 
   return origin;
 };
