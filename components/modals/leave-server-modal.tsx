@@ -1,6 +1,9 @@
 "use client";
 
-import React, { use, useState } from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
 import {
   Dialog,
   DialogContent,
@@ -9,102 +12,60 @@ import {
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog";
-
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
-  } from "@/components/ui/form";
-
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { FileUpload } from "@/components/file-upload";
+import { useModal } from "@/components/hooks/use-modal-store";
 
-import { useForm } from "react-hook-form";
-import * as z from "zod"; 
-import {zodResolver} from "@hookform/resolvers/zod";
-
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useModal } from "../hooks/use-modal-store";
-import { Label } from "@/components/ui/label";
-import { Check, Copy, RefreshCw } from "lucide-react";
-import { useOrigin } from "@/components/hooks/use-origin";
-
-
-export const LeaveServerModal = () => {
-  const { isOpen, onOpen, onClose, type, data } = useModal();
-   const origin = useOrigin();
+export function LeaveServerModal() {
+  const { isOpen, onClose, type, data } = useModal();
+  const router = useRouter();
 
   const isModalOpen = isOpen && type === "leaveServer";
   const { server } = data;
 
-  const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
- 
-const onNew = async () => {
-     try {
-       setIsLoading(true);
 
-      const response = await axios.patch(
-         `/api/servers/${server?.id}/invite-code`
-       );
+  const onClick = async () => {
+    try {
+      setIsLoading(true);
 
-        onOpen("invite", { server: response.data });
-     } catch (error) {
-       console.log(error);
-     } finally {
-       setIsLoading(false);
-     }
- ;
+      await axios.patch(`/api/servers/${server?.id}/leave`);
+
+      onClose();
+      router.refresh();
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    return (
-      <Dialog open={isModalOpen} onOpenChange={onClose}>
+  return (
+    <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Invite Friends
+            Leave Server
           </DialogTitle>
+          <DialogDescription className="text-center text-zinc-500">
+            Are you sure? You want to leave{" "}
+            <span className="font-semibold text-indigo-500">
+              {server?.name}
+            </span>
+            ?
+          </DialogDescription>
         </DialogHeader>
-        <div className="p-6">
-          <Label className="uppercase text-xs font-bold text-zinc-500 dark:text-secondary/70">
-            Server invite link
-          </Label>
-          <div className="flex items-center mt-2 gap-x-2">
-            <Input
-              readOnly
-              disabled={isLoading}
-              value=  {inviteUrl}
-              className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
-            />
-            <Button disabled= {isLoading} onClick = {onCopy}  size="icon">  
-            {copied ? (
-                <Check className="w-4 h-4" />
-              ) : (
-                <Copy className="w-4 h-4" />
-               )} 
+        <DialogFooter className="bg-gray-100 px-6 py-4">
+          <div className="flex items-center justify-between w-full">
+            <Button variant="ghost" disabled={isLoading} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button variant="primary" disabled={isLoading} onClick={onClick}>
+              Confirm
             </Button>
           </div>
-          <Button
-            disabled={isLoading}
-             onClick={onNew}
-            variant="link"
-            size="sm" 
-            className="text-xs text-zinc-500 mt-4"
-          >
-            Generate a new link
-            <RefreshCw className="w-4 h-4 ml-2" />
-          </Button>
-        </div> 
+        </DialogFooter>
       </DialogContent>
     </Dialog>
-              
-    );
-
-  }
-    
+  );
+}
