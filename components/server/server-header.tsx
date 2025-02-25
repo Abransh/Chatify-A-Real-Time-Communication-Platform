@@ -77,7 +77,7 @@ interface ServerHeaderProps {
         )}
         {isModerator && (
           <DropdownMenuItem
-            onClick={() => onOpen("editServer", { server })}
+            onClick={() => onOpen("createChannel", { server })}
             className="px-3 py-2 text-sm cursor-pointer"
           >
             Create Channels
