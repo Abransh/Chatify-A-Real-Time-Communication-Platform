@@ -66,6 +66,35 @@ export const MembersModal  = () => {
                 </div>
                 <p className="text-xs text-zinc-500">{member.profile.email}</p>
               </div>
+              {server.profileId !== member.profileId &&
+                loadingId !== member.id && (
+                  <div className="ml-auto">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger>
+                        <MoreVertical className="h-4 w-4 text-zinc-500" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent side="left">
+                        <DropdownMenuSub>
+                          <DropdownMenuSubTrigger className="flex items-center">
+                            <ShieldQuestion className="w-4 h-4 mr-2" />
+                            <span>Role</span>
+                          </DropdownMenuSubTrigger>
+                          <DropdownMenuPortal>
+                            <DropdownMenuSubContent>
+                              <DropdownMenuItem
+                                onClick={() => onRoleChange(member.id, "GUEST")}
+                              >
+                                <Shield className="h-4 w-4 mr-2" />
+                                Guest
+                                {member.role === "GUEST" && (
+                                  <Check className="h4 w-4 ml-auto" />
+                                )}
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() =>
+                                  onRoleChange(member.id, "MODERATOR")
+                                }
+                              ></DropdownMenuItem>
 
         </ScrollArea>
         
