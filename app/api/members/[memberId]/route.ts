@@ -4,58 +4,64 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
 export async function DELETE(
-  req: Request,
-  { params }: { params: { memberId: string } }
-) {
-  try {
-    const { searchParams } = new URL(req.url);
-
-    const profile = await currentProfile();
-    const { role } = await req.json();
-
-    if (!profile) return new NextResponse("Unauthorized", { status: 401 });
-
-    const serverId = searchParams.get("serverId");
-    if (!serverId)
-      return new NextResponse("Server ID Missing", { status: 400 });
-
-    if (!params.memberId)
-      return new NextResponse("Member ID Missing", { status: 400 });
-
-    const server = await db.server.update({
-      where: {
-        id: serverId,
-        profileId: profile.id
-      },
-      data: {
-        members: {
-          deleteMany: {
-            id: params.memberId,
-            profileId: {
-              not: profile.id
+    req: Request,
+    { params }: { params: { memberId: string } }
+  ) {
+    try {
+      const { searchParams } = new URL(req.url);
+  
+      const profile = await currentProfile();
+      if (!profile) return new NextResponse("Unauthorized", { status: 401 });
+  
+      const serverId = searchParams.get("serverId");
+      if (!serverId) return new NextResponse("Server ID Missing", { status: 400 });
+  
+      if (!params.memberId) return new NextResponse("Member ID Missing", { status: 400 });
+  
+      // Parse JSON body safely (DELETE might not have a body)
+      let role;
+      try {
+        const rawBody = await req.text();
+        role = rawBody ? JSON.parse(rawBody).role : null;
+      } catch (error) {
+        console.warn("[MEMBER_ID_DELETE] Failed to parse body:", error);
+        role = null; // Default to null if body parsing fails
+      }
+  
+      const server = await db.server.update({
+        where: {
+          id: serverId,
+          profileId: profile.id
+        },
+        data: {
+          members: {
+            deleteMany: {
+              id: params.memberId,
+              profileId: {
+                not: profile.id
+              }
+            }
+          }
+        },
+        include: {
+          members: {
+            include: {
+              profile: true
+            },
+            orderBy: {
+              role: "asc"
             }
           }
         }
-      },
-      include: {
-        members: {
-          include: {
-            profile: true
-          },
-          orderBy: {
-            role: "asc"
-          }
-        }
-      }
-    });
-
-    return NextResponse.json(server);
-    
-  } catch (error) {
-    console.error("[MEMBER_ID_DELETE]", error);
-    return new NextResponse("Internal Error", { status: 500 });
+      });
+  
+      return NextResponse.json(server);
+    } catch (error) {
+      console.error("[MEMBER_ID_DELETE]", error);
+      return new NextResponse("Internal Error", { status: 500 });
+    }
   }
-}
+  
 
 export async function PATCH(
   req: Request,
