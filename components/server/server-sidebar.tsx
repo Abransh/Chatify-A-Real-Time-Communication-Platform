@@ -175,7 +175,7 @@ const server = await db.server.findUnique({
                   channel={channel}
                   role={role}
                   server={server}
-                />
+                /> 
               ))}
             </div>
           </div>
