@@ -8,6 +8,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { ServerSearch } from "@/components/server/server-search";
 import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { ServerSection } from "@/components/server/server-sections";
 
 
 interface ServerSidebarProps {
@@ -123,7 +124,7 @@ const server = await db.server.findUnique({
           <div className="mb-2">
             <ServerSection
               sectionType="channels"
-              channelType={ChannelType.TEXT}
+               channelType={ChannelType.TEXT}
               role={role}
               label="Text Channels"
             />
