@@ -12,6 +12,7 @@ import {
   CommandItem,
   CommandList
 } from "@/components/ui/command";
+import { ReactNode } from "react";
 
 interface ServerSearchProps {
   data: {
