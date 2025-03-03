@@ -60,25 +60,22 @@ export const EditServerModal: React.FC = () => {
 
     const isModalOpen = isOpen && type === "editChannel";
 
-    const { channelType } = data;
+    const { channel, server } = data;
      
     const form = useForm({
       resolver: zodResolver(formSchema),
       defaultValues: {
         name: "",
-        type: channelType || ChannelType.TEXT   ,  //channelType || ChannelType.TEXT
+        type:ChannelType.TEXT   ,  //channelType || ChannelType.TEXT
       }
     });
 
     useEffect (() => {
-        if(channelType) {
-          form.setValue("type", channelType);
-        } 
-        else{
-          form.setValue("type", ChannelType.TEXT);
-        }
-
-    }, [channelType, form]
+      if (channel) {
+        form.setValue("name", channel.name);
+        form.setValue("type", channel.type);
+      }
+    }, [form]
   ); 
 
     const isLoading = form.formState.isSubmitting;
@@ -112,7 +109,7 @@ export const EditServerModal: React.FC = () => {
          <DialogContent className="bg-white text-black p-0 overflow-hidden">
             <DialogHeader className="pt-8 px-6">
                 <DialogTitle className="text-2xl text-center font-bold">
-                Create Channel
+                Edit Channel
                     </DialogTitle>
                     
             </DialogHeader>
@@ -180,7 +177,7 @@ export const EditServerModal: React.FC = () => {
             </div>
                   <DialogFooter className="bg-gray-100 px-6 py-4">
                 <Button disabled={isLoading} variant= "primary">
-                    Create
+                    Save
                 </Button>
              </DialogFooter>
                </form>   

@@ -27,6 +27,7 @@ export const ModalProvider: React.FC = () => {
       <LeaveServerModal />
       <DeleteServerModal />
       <DeleteChannelModal />
+      <EditServerModal />
       
      
     </>
