@@ -11,6 +11,15 @@ export async function PATCH(
 ) {
 
 try {
+    const profile = await currentProfile();
+    if (!profile) return new NextResponse("Unauthorized", { status: 401 });
+
+    const { searchParams } = new URL(req.url);
+    const serverId = searchParams.get("serverId");
+    if (!serverId)
+      return new NextResponse("Server ID Missing", { status: 400 });
+    if (!params.channelId)
+      return new NextResponse("Channel ID Missing", { status: 400 });
 
 }
 catch (error) {
