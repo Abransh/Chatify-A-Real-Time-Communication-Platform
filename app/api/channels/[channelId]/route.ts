@@ -21,6 +21,44 @@ try {
     if (!params.channelId)
       return new NextResponse("Channel ID Missing", { status: 400 });
 
+    const { name, type } = await req.json();
+    if (!name || !type || name === "general")
+      return new NextResponse("Name / Type cannot be empty or general", {
+        status: 400
+      });
+
+    const server = await db.server.update({
+      where: {
+        id: serverId,
+        members: {
+          some: {
+            profileId: profile.id,
+            role: {
+              in: [MemberRole.ADMIN, MemberRole.MODERATOR]
+            }
+          }
+        }
+      },
+      data: {
+        channels: {
+          update: {
+            where: {
+              id: params.channelId,
+              NOT: {
+                name: "general"
+              }
+            },
+            data: {
+              name,
+              type
+            }
+          }
+        }
+      }
+    });
+
+    return NextResponse.json(server);
+
 }
 catch (error) {
     console.error("[CHANNEL_ID_PATCH", error);
