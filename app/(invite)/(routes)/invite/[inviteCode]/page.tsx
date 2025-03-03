@@ -1,3 +1,5 @@
+
+
 import React from "react";
 import { RedirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
@@ -16,7 +18,7 @@ export default async function InviteCodePage({
 }: InviteCodePageProps) {
   const profile = await currentProfile();
 
-  if (!profile) return RedirectToSignIn({});
+  if (!profile) return redirect("/sign-in");
 
   if (!inviteCode) return redirect("/");
 

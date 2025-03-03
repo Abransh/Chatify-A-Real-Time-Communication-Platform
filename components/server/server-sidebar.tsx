@@ -5,11 +5,12 @@ import { ChannelType, MemberRole } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { ServerHeader } from "./server-header";
 import { ScrollArea } from "../ui/scroll-area";
-import { ServerSearch } from "@/components/server/server-search";
+import { ServerSearch } from "./server-search";
 import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { ServerSection } from "@/components/server/server-section";
-import { ServerChannel } from "@/components/server/server-channel";
+import { ServerSection } from "./server-section";
+import { ServerChannel } from "./server-channel";
+import { ServerMember } from "./server-member";
 
 
 interface ServerSidebarProps {
@@ -161,6 +162,7 @@ const server = await db.server.findUnique({
             </div>
           </div>
         )}
+        
         {!!videoChannels?.length && (
           <div className="mb-2">
             <ServerSection
@@ -169,6 +171,7 @@ const server = await db.server.findUnique({
               role={role}
               label="Video Channels"
             />
+
             <div className="space-y-[2px]">
               {videoChannels.map((channel) => (
                 <ServerChannel
