@@ -4,6 +4,25 @@ import { MemberRole } from "@prisma/client";
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 
+
+export async function PATCH(
+    req: Request,
+  { params }: { params: { channelId: string } }
+) {
+
+try {
+
+}
+catch (error) {
+    console.error("[CHANNEL_ID_PATCH", error);
+    return new NextResponse("Internal Error", { status: 500 });
+  }
+
+}
+
+
+
+
 export async function DELETE(
     req: Request,
     { params }: { params: { channelId: string } }
