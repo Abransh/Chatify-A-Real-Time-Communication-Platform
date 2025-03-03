@@ -12,6 +12,25 @@ export async function DELETE(
         const profile = await currentProfile();
     if (!profile) return new NextResponse("Unauthorized", { status: 401 });
 
+    const { searchParams } = new URL(req.url);
+    const serverId = searchParams.get("serverId");
+    if (!serverId)
+      return new NextResponse("Server ID Missing", { status: 400 });
+    if (!params.channelId)
+      return new NextResponse("Channel ID Missing", { status: 400 });
+
+    const server = await db.server.update({
+      where: {
+        id: serverId,
+        members: {
+          some: {
+            profileId: profile.id,
+            role: {
+              in: [MemberRole.ADMIN, MemberRole.MODERATOR]
+            }
+          }
+        }
+      },
     }
     catch (error) {
         console.error("[CHANNEL_ID_DELETE", error);
