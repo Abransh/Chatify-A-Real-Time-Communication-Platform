@@ -22,6 +22,7 @@ try {
       return new NextResponse("Channel ID Missing", { status: 400 });
 
     const { name, type } = await req.json();
+
     if (!name || !type || name === "general")
       return new NextResponse("Name / Type cannot be empty or general", {
         status: 400
@@ -45,12 +46,12 @@ try {
             where: {
               id: params.channelId,
               NOT: {
-                name: "general"
-              }
+                name: "general",
+              }, 
             },
             data: {
               name,
-              type
+              type,
             }
           }
         }

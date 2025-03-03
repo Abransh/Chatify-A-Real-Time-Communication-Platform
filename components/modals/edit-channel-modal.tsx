@@ -27,7 +27,7 @@ import * as z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 
 import axios from "axios";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import qs from "query-string";
 import { useModal } from "../hooks/use-modal-store";
 
@@ -56,7 +56,7 @@ const formSchema = z.object({
 export const EditServerModal: React.FC = () => {
     const { isOpen, onClose, type, data } = useModal();
     const router = useRouter();
-    const params = useParams();
+  
 
     const isModalOpen = isOpen && type === "editChannel";
 
@@ -66,7 +66,7 @@ export const EditServerModal: React.FC = () => {
       resolver: zodResolver(formSchema),
       defaultValues: {
         name: "",
-        type:ChannelType.TEXT   ,  //channelType || ChannelType.TEXT
+        type:channel?.type || ChannelType.TEXT   ,  //channelType || ChannelType.TEXT
       }
     });
 
@@ -83,11 +83,13 @@ export const EditServerModal: React.FC = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
       try {
         const url = qs.stringifyUrl({
-          url: "/api/channels",
-          query: { serverId: params?.serverId }
+          url: `/api/channels/${channel?.id}`,
+          query: { 
+            serverId:  server?.id
+           }
         });
   
-        await axios.post(url, values);
+        await axios.patch(url, values);
   
         form.reset();
         router.refresh();
