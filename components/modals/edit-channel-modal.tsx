@@ -53,13 +53,12 @@ const formSchema = z.object({
   type: z.nativeEnum(ChannelType)
 });
 
-export const EditServerModal: React.FC = () => {
+export const EditChannelModal: React.FC = () => {
     const { isOpen, onClose, type, data } = useModal();
     const router = useRouter();
   
 
     const isModalOpen = isOpen && type === "editChannel";
-
     const { channel, server } = data;
      
     const form = useForm({
